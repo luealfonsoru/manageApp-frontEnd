@@ -1,0 +1,37 @@
+.my-bar{
+	position: absolute;
+	top: 0px;
+	height: 8vh;
+	width: 100vw;
+	background-color: #131e3a;
+}
+
+.title{
+	position: absolute;
+	margin-top: 3px;
+	margin-left: 15px;
+	color: #ffffff;
+	font-size: 4vh;
+	width: 50vw;
+}
+
+.input-container{
+	position:absolute;
+	width: 40vw;
+	margin-left: 60vw;
+	margin-top: 3px ;
+
+}
+#input{
+	top:0px;
+	width: 20%;
+	border: 0px;
+	font-size:25%;
+	border-radius: 0px;
+}
+
+#button{
+	top:0px;
+	width: 20%;
+	box-sizing: border-box;
+}

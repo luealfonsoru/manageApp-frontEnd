@@ -1,0 +1,20 @@
+.main-image{
+	position: absolute;
+	margin-left:0px;
+	margin-top:8vh;
+	top:0px;
+	left: 0px;
+	height: 92vh;
+	width: 45vw;
+	background-image: url(/assets/1.jpg);
+	background-size: cover;
+}
+.text-container{
+	position: absolute;
+	margin-left:45vw;
+	margin-top:8vh;
+	top:0px;
+	left: 0px;
+	height: 92vh;
+	width: 55vw;
+}
