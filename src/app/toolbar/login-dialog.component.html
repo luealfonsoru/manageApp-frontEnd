@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Iniciar sesión</h1>
+<div mat-dialog-content>
+    <h4>¡Haz tu papeleo de forma sencilla! inicia sesión para que nunca olvides hacer tu papeleo.</h4>
+    <form #f="ngForm">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Ingrese su email" id="email" type="email" [(ngModel)]="signInUser.email" name="email" required>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+                <input matInput placeholder="Ingrese su contraseña" id="password" type="password" [(ngModel)]="signInUser.password" name="password" required>
+        </mat-form-field>
+</form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button type="submit" [ngClass]="{'disabled': !(f.valid)}" [disabled]="!(f.valid)" (click)="onSignInSubmit()">Enviar</button>
+  <button mat-button (click)="onNoLoginClick()">Cancelar</button>
+</div>

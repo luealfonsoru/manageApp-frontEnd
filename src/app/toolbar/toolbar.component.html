@@ -1,13 +1,16 @@
-<div class="my-bar">
-</div>
-	<div class="title">
-		Iniciar Sesión
-	</div>
-	<div class="input-container">
-		<input type="text" placeholder=" Email " id="email" name="email">
-	<input type="password" placeholder=" Contraseña " id="password" name="password">
-	<button type="button">Enviar</button>
-	</div>
+<mat-toolbar color="primary" role="header">
+  <mat-toolbar-row>  
+    <mat-icon>date_range</mat-icon>
+    <span>¡Haz Tu Papeleo!</span>
+    <button mat-button (click)="openRegisterDialog()" [disabled]="isRegDiag()">Registrarse</button> 
+    <button mat-button (click)="openLoginDialog()" [disabled]="isOpenDiag()">Iniciar Sesión</button> 
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+
+
+
 
 <!-- <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

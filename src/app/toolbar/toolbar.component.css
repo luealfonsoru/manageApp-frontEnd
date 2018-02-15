@@ -1,4 +1,25 @@
-.my-bar{
+mat-toolbar{
+	position:fixed;
+	top:0px;
+	left:0px;
+	margin-top:0px;
+	margin-left:0px;
+	margin-right: 0px;
+	box-shadow: 0px 4px 20px black;
+	z-index: 99999999;
+}
+
+span{
+	margin-left: 5px;
+}
+
+.login-button{
+	right: 10px;
+}
+
+
+
+/* .my-bar{
 	position: absolute;
 	top: 0px;
 	height: 8vh;
@@ -34,4 +55,4 @@
 	top:0px;
 	width: 20%;
 	box-sizing: border-box;
-}
+} */
