@@ -133,6 +133,7 @@ export class AppLoginDialog {
 export class AppRegisterDialog {
 
   constructor(
+    private tokenAuthSerivce:Angular2TokenService,
     public dialogRef: MatDialogRef<AppRegisterDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -140,6 +141,35 @@ export class AppRegisterDialog {
     this.dialogRef.close();
   }
 
+  signUpUser = {
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+  };
+
+   @Output() onFormResult = new EventEmitter<any>();
+
+
+
+  onSignUpSubmit(){
+
+    this.tokenAuthSerivce.registerAccount(this.signUpUser).subscribe(
+
+        (res) => {
+
+          if (res.status == 200){
+            this.onFormResult.emit({signedUp: true, res})
+          }
+
+        },
+
+        (err) => {
+          console.log(err.json())
+          this.onFormResult.emit({signedUp: false, err})
+        }
+    )
+
+  }
 }
 
 @Component({

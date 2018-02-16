@@ -1,14 +1,20 @@
 <h1 mat-dialog-title>Registrate</h1>
 <div mat-dialog-content>
-  <p>¡Haz tu papeleo de forma sencilla! inicia sesión para que nunca olvides hacer tu papeleo.</p>
+  <p>Regístrate para hacer tu papeleo</p>
+  <form (ngSubmit)="onSignUpSubmit()" #f="ngForm" >
     <mat-form-field class="example-full-width">
-        <input matInput placeholder="Ingrese su email" type="text">
+        <input matInput placeholder="Ingrese su email" type="email" id="email" name="email" [(ngModel)]="signUpUser.email" required>
     </mat-form-field>
     <mat-form-field class="example-full-width">
-            <input matInput placeholder="Ingrese su contraseña" type="password">
+        <input matInput placeholder="Ingrese su password" type="password" id="password" name="password" [(ngModel)]="signUpUser.password" required>
     </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Confirme su password" type="password" id="passwordConfirmation" name="passwordConfirmation" [(ngModel)]="signUpUser.passwordConfirmation" required>
+    </mat-form-field>
+    <div *ngIf="!(signUpUser.password == signUpUser.passwordConfirmation)" > <h5 style="color:red;">Las contraseñas debe coincidir</h5> </div>
+  </form>
 </div>
 <div mat-dialog-actions>
-  <button mat-button>Enviar</button>
+  <button mat-button type="submit" [disabled]="!(f.valid) || !(signUpUser.password == signUpUser.passwordConfirmation)" (click)="onSignUpSubmit()">Enviar</button>
   <button mat-button (click)="onNoRegClick()">Cancelar</button>
 </div>
