@@ -1,0 +1,33 @@
+<div class="profile-div">
+  <mat-card>
+    <mat-card-title style="text-align:center;">{{authService.currentUserData.name}}</mat-card-title>
+    <mat-card-subtitle style="text-align:center;">{{authService.currentUserData.email}}</mat-card-subtitle>
+    <img class="profile-photo" mat-card-avatar mat-card-lg-image src="/assets/profiles/{{authService.currentUserData.image}}">
+    <mat-card-content>Con "Haz Tu Papeleo" registra de forma agil tus horas de trabajo, crea proyectos, haz seguimiento de tus compromisos y obten reportes de tu grupo de trabajo. ¡Registrate o inicia sesión!</mat-card-content>
+  </mat-card>
+</div>
+
+<div class="main-div">
+  <mat-card>
+    <mat-card>
+        <mat-card-title>Mis Proyectos</mat-card-title>
+        <mat-button-toggle-group>
+            <mat-button-toggle>Mis Proyectos</mat-button-toggle>
+            <!-- <mat-button-toggle (click)="toggleProyects(1)">Crear Proyecto</mat-button-toggle>
+            <mat-button-toggle (click)="toggleProyects(2)">Buscar Proyectos</mat-button-toggle> -->
+        </mat-button-toggle-group>
+        <!-- <mat-card *ngIf="currentProyectMenu===1">Crear Proyecto</mat-card>
+        <mat-card *ngIf="currentProyectMenu===2">Buscar Proyectos</mat-card> -->
+        <mat-card *ngFor="let result of myProyects">
+            <mat-card-title style="font-size:15px">{{result.name}}</mat-card-title>
+            <mat-card-subtitle style="font-size:14px">Número: {{result.number}}, Inicio: {{result.start}}, Final: {{result.end}}</mat-card-subtitle>
+        </mat-card>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>Mis Horas de trabajo</mat-card-title>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>Mis Compromisos</mat-card-title>
+    </mat-card>
+  </mat-card>
+</div>

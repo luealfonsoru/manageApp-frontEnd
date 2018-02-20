@@ -2,15 +2,39 @@
 <div mat-dialog-content>
   <p>Regístrate para hacer tu papeleo</p>
   <form (ngSubmit)="onSignUpSubmit()" #f="ngForm" >
-    <mat-form-field class="example-full-width">
+    <mat-form-field style="width: 100%;" class="example-full-width">
         <input matInput placeholder="Ingrese su email" type="email" id="email" name="email" [(ngModel)]="signUpUser.email" required>
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field style="width: 100%;"class="example-full-width">
+        <input matInput placeholder="Ingrese su Nombre completo" id="name" type="text" [(ngModel)]="userInfo.name" name="name" required>
+    </mat-form-field>  
+    <mat-form-field style="width: 45%;"class="example-full-width">
         <input matInput placeholder="Ingrese su password" type="password" id="password" name="password" [(ngModel)]="signUpUser.password" required>
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field style="width: 45%;"class="example-full-width">
         <input matInput placeholder="Confirme su password" type="password" id="passwordConfirmation" name="passwordConfirmation" [(ngModel)]="signUpUser.passwordConfirmation" required>
-    </mat-form-field>
+    </mat-form-field> 
+    <mat-button-toggle-group style="margin-left: auto;margin-right: auto;">
+        <mat-button-toggle (click)="setProfile('1')"><img mat-card-avatar src="/assets/profiles/1.jpg"></mat-button-toggle>
+        <mat-button-toggle (click)="setProfile('2')"><img mat-card-avatar src="/assets/profiles/2.jpg"></mat-button-toggle>
+        <mat-button-toggle (click)="setProfile('3')"><img mat-card-avatar src="/assets/profiles/3.jpg"></mat-button-toggle>
+        <mat-button-toggle (click)="setProfile('4')"><img mat-card-avatar src="/assets/profiles/4.jpg"></mat-button-toggle>
+        <mat-button-toggle (click)="setProfile('5')"><img mat-card-avatar src="/assets/profiles/5.jpg"></mat-button-toggle>
+        <mat-button-toggle (click)="setProfile('6')"><img mat-card-avatar src="/assets/profiles/6.jpg"></mat-button-toggle>
+    </mat-button-toggle-group>
+    <!-- <div (click)="selected(1)" class="avatar-selector" style="position: absolute; width: 50px;
+    height: 50px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: darkgrey;
+    background: src('/assets/profiles/1.jpg');
+    background-size: cover;"
+    ></div>  -->
+    <!-- <img src="/assets/profiles/2.jpg">
+    <img class="avatar-selector" src="/assets/profiles/3.jpg">
+    <img class="avatar-selector" src="/assets/profiles/4.jpg">
+    <img class="avatar-selector" src="/assets/profiles/5.jpg">
+    <img class="avatar-selector" src="/assets/profiles/6.jpg"> -->
     <div *ngIf="!(signUpUser.password == signUpUser.passwordConfirmation)" > <h5 style="color:red;">Las contraseñas debe coincidir</h5> </div>
   </form>
 </div>

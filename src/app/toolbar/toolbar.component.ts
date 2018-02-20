@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {Angular2TokenService} from "angular2-token";
+import {AuthService} from "../services/auth.service";
+import {ApiServiceService} from "../services/api-service.service";
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,11 +12,15 @@ import {Angular2TokenService} from "angular2-token";
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public apiService: ApiServiceService, public authService: AuthService, public authTokenService: Angular2TokenService, public router: Router) {}
 
   isOpen = false;
   registerOpen = false;
 
+  logOut(){
+      this.authService.logOutUser().subscribe();
+      this.router.navigate(['/']);
+    }
 
   closeAllDialogs(): void{
     this.dialog.closeAll();
@@ -37,7 +44,7 @@ export class ToolbarComponent implements OnInit {
     this.isOpen = false;
     this.registerOpen = true;
     let dialogRef = this.dialog.open(AppRegisterDialog, {
-      width: '400px',
+      width: '600px',
     });
     dialogRef.afterClosed().subscribe(result => {
       this.registerOpen = false;
@@ -55,6 +62,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.apiService.getUsers().subscribe());
   }
 
 }
@@ -74,7 +82,8 @@ export class AppLoginDialog {
   @Output() onFormResult = new EventEmitter<any>();
 
   constructor(
-    private tokenAuthSerivce:Angular2TokenService,
+    public router:Router,
+    public authService:AuthService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AppLoginDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -85,10 +94,12 @@ export class AppLoginDialog {
 
   onSignInSubmit(){
 
-	    this.tokenAuthSerivce.signIn(this.signInUser).subscribe(
+	    this.authService.logInUser(this.signInUser).subscribe(
 
 	        res => {
-
+            this.onFormResult.emit({signedIn: true, res});
+            this.dialogRef.close();
+            this.router.navigate(['/profile']);
 	          console.log('auth response:', res);
 	          console.log('auth response headers: ', res.headers.toJSON()); //log the response header to show the auth token
 	          console.log('auth response body:', res.json()); //log the response body to show the user 
@@ -98,6 +109,7 @@ export class AppLoginDialog {
             let dialogRef = this.dialog.open(AppErrorDialog, {
               width: '300px',
             });
+            this.onFormResult.emit({signedIn: false, err});
             dialogRef.afterClosed().subscribe(result => {
               console.log('The dialog was closed');
             });
@@ -133,6 +145,8 @@ export class AppLoginDialog {
 export class AppRegisterDialog {
 
   constructor(
+    public authService: AuthService,
+    public apiService: ApiServiceService,
     private tokenAuthSerivce:Angular2TokenService,
     public dialogRef: MatDialogRef<AppRegisterDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -147,18 +161,49 @@ export class AppRegisterDialog {
     passwordConfirmation: ''
   };
 
+  userInfo = {
+    name: "",
+    image: "1.jpg"
+  }
+  signInUser={
+    email: "",
+    password: ""
+  };
    @Output() onFormResult = new EventEmitter<any>();
 
 
 
+  setProfile(profile){
+    this.userInfo.image = profile+".jpg";
+    console.log(profile+".jpg");
+  }
   onSignUpSubmit(){
-
+    this.dialogRef.close();
     this.tokenAuthSerivce.registerAccount(this.signUpUser).subscribe(
 
         (res) => {
 
           if (res.status == 200){
+            console.log(res.json())
             this.onFormResult.emit({signedUp: true, res})
+            this.signInUser = {email:this.signUpUser.email,password:this.signUpUser.password}
+            this.authService.logInUser(this.signInUser).subscribe(
+
+              res => {
+                this.onFormResult.emit({signedIn: true, res});
+                this.apiService.putUserFirst(this.userInfo,this.tokenAuthSerivce.currentUserData.id).subscribe(resp =>{
+                  this.apiService.createUserProyect(1,this.tokenAuthSerivce.currentUserData.id).subscribe();
+                });
+                console.log('auth response:', res);
+                console.log('auth response headers: ', res.headers.toJSON()); //log the response header to show the auth token
+                console.log('auth response body:', res.json()); //log the response body to show the user 
+              },
+    
+              err => {
+                
+              }
+          )
+            
           }
 
         },
@@ -170,6 +215,7 @@ export class AppRegisterDialog {
     )
 
   }
+
 }
 
 @Component({

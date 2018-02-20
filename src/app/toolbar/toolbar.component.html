@@ -1,9 +1,11 @@
 <mat-toolbar color="primary" role="header">
   <mat-toolbar-row>  
     <mat-icon>date_range</mat-icon>
-    <span>¡Haz Tu Papeleo!</span>
-    <button mat-button (click)="openRegisterDialog()" [disabled]="isRegDiag()">Registrarse</button> 
-    <button mat-button (click)="openLoginDialog()" [disabled]="isOpenDiag()">Iniciar Sesión</button> 
+    <span *ngIf="!authTokenService.currentUserData">¡Haz Tu Papeleo!</span>
+    <span *ngIf="authTokenService.currentUserData">Hola, {{authTokenService.currentUserData.name}}</span>
+    <div style="position:absolute; right:0px;"><button *ngIf="!authTokenService.currentUserData" mat-button (click)="openRegisterDialog()" [disabled]="isRegDiag()">Registrarse</button>
+      <button *ngIf="authTokenService.currentUserData" mat-button (click)="logOut()">Cerrar Sesión</button> 
+      <button mat-button *ngIf="!authTokenService.currentUserData" (click)="openLoginDialog()" [disabled]="isOpenDiag()">Iniciar Sesión</button></div>
   </mat-toolbar-row>
 
 </mat-toolbar>

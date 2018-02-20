@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule, Router } from '@angular/router';
+import {Angular2TokenService} from "angular2-token";
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authService: Angular2TokenService, public router: Router) { }
 
   ngOnInit() {
+    if (this.authService.userSignedIn()){
+      this.router.navigate(['/profile']);
+    } 
   }
 
 }
